@@ -81,7 +81,7 @@ f = colors.end
 #Formatação de print para estilizar a tela principal
 def header_create():
 	time.sleep(0.7)
-	print(forma.sub + " "*63 + forma.end)
+	print(forma.sub + f"{f} "*63 + forma.end)
 	print(forma.sub + "    |            Gerenciador de Tarefas           |" + " "*12 + forma.end)
 	header = "ID  |     Descrição da Tarefa     | Status | Data"
 	print(colors.cyan + header + colors.end)
@@ -96,9 +96,9 @@ def show_table():
 		task = i["task"]["name"]
 		data = i["data"]
 		stats = i["stats"]
-		stats_color = pers[0]["4"] if stats == "incompleto" else pers[0]["5"]
+		stats_color = pers[0]["5"] if stats == "incompleto" else pers[0]["4"]
 		print(f"{id_color}{idx:03}{f} | {task_color}{task:<30}{f} | {stats_color}{stats:<10}{f} | {date_color}{data}{f}")
-	input(f"\ntecle enter para voltar")
+	input(f"{T_color}\ntecle enter para voltar")
 	time.sleep(0.5)
 	print("_"*60) 
 #_____________________________________________________________________
@@ -110,7 +110,7 @@ def show_task(id):
     stats = id["stats"]
     data = id["data"]
     desc = id["task"]["desc"]
-    stats_color = pers[0]["4"] if stats == "incompleto" else pers[0]["5"]
+    stats_color = pers[0]["5"] if stats == "incompleto" else pers[0]["4"]
     print(f"{id_color}{i:03}{f} | {task_color}{task:<30}{f} | {stats_color}{stats:<10}{f} | {date_color}{data}{f}")
     print("_"*60, "\n")
     if len(desc) > 70: #verifica o tamanho da descrição e a quebra em 2 linhas
@@ -121,7 +121,7 @@ def show_task(id):
     else:
         print(desc)
         print("_"*60)
-    print("""1. Editar tarefa
+    print(f"""{T_color}1. Editar tarefa
 2. Excluir tarefa
 obs: tecle enter ou qualquer tecla para voltar ao menu principal""")
     quest = input(" ")
@@ -136,7 +136,7 @@ obs: tecle enter ou qualquer tecla para voltar ao menu principal""")
 #_____________________________________________________________________    
 #seletor de tarefa (Selecionar tarefa específica)   
 def selector():
-	quest = int(input("digite um id(não use zeros a esquerda): "))
+	quest = int(input(f"{T_color}digite um id(não use zeros a esquerda): "))
 	print("_"*60)
 	time.sleep(0.5)
 	for i in db:
@@ -223,13 +223,64 @@ def personalizar():
 	global pers, id_color, task_color, desc_color, date_color, T_color
     #(1 id)(2 task)(3 desc)(4 status-completo)(5 status-incompleto)(6 data)(7 terminal)
 	listar_cores()
-	one = input("Qual cor deseja? ")
+	print("""1. Id das tarefas
+2. Nome das tarefas
+3. Descrição das tarefas
+4. Status das tarefas - completo
+5. Status das tarefas - incompleto
+6. Datas das tarefas
+7. Terminal""")
+	quest = input("O que deseja personalizar: ")
+	if quest == "1":
+		one = input("cor desejada: ")
+		if hasattr(colors, one):  
+			pers[0]["1"] = getattr(colors, one) 
+		else:
+			print("Cor inválida! Usando o padrão.")
+			pers[0]["1"] = colors.end
+	elif quest == "2":
+		one = input("cor desejada: ")
+		if hasattr(colors, one):
+			pers[0]["2"] = getattr(colors, one) 
+		else:
+			print("Cor inválida! Usando o padrão.")
+			pers[0]["2"] = colors.end
+	elif quest == "3":
+		one = input("cor desejada: ")
+		if hasattr(colors, one):  
+			pers[0]["3"] = getattr(colors, one) 
+		else:
+			print("Cor inválida! Usando o padrão.")
+			pers[0]["3"] = colors.end
+	elif quest == "4":
+		one = input("cor desejada: ")
+		if hasattr(colors, one):  
+			pers[0]["4"] = getattr(colors, one) 
+		else:
+			print("Cor inválida! Usando o padrão.")
+			pers[0]["4"] = colors.end
+	elif quest == "5":
+		one = input("cor desejada: ")
+		if hasattr(colors, one):  
+			pers[0]["5"] = getattr(colors, one) 
+		else:
+			print("Cor inválida! Usando o padrão.")
+			pers[0]["5"] = colors.end
+	elif quest == "6":
+		one = input("cor desejada: ")
+		if hasattr(colors, one):  
+			pers[0]["6"] = getattr(colors, one) 
+		else:
+			print("Cor inválida! Usando o padrão.")
+			pers[0]["6"] = colors.end
+	elif quest == "7":
+		one = input("cor desejada: ")
+		if hasattr(colors, one):  
+			pers[0]["7"] = getattr(colors, one) 
+		else:
+			print("Cor inválida! Usando o padrão.")
+			pers[0]["7"] = colors.end
     # Verifica se a cor existe no objeto 'colors'
-	if hasattr(colors, one):  
-		pers[0]["7"] = getattr(colors, one)  # Obtém o valor da cor dinamicamente
-	else:
-		print("Cor inválida! Usando o padrão.")
-		pers[0]["7"] = colors.end  # Define um padrão caso a cor seja inválida
     # Salva as alterações no arquivo
 	with open(file_theme, "w") as json_file:
 		json.dump(pers, json_file, indent=4)
@@ -258,7 +309,8 @@ while main_menu == True: #Carrega o menu principal quando true
 4. Adicionar tarefa
 5. Salvar alterações
 6. Sair
-\n obs: \num banco de dados padrão sera carregado em falta de escolha\n7 para limpar o terminal""")
+7. Personalizar
+\n obs: \num banco de dados padrão sera carregado em falta de escolha\n8 para limpar o terminal""")
 	#uso das """serve para selecionar todo o bloco como string"""
 
 	choice = input("Escolha uma opção (1-7): ")
@@ -287,4 +339,5 @@ while main_menu == True: #Carrega o menu principal quando true
 		pass
 	else:
 		print("Opção inválida. Tente novamente.")
+
 #_____________________________________________________________________
