@@ -1,0 +1,27 @@
+bro, documentando algumas logicas
+
+#primeira:
+load e save
+com with open(um metodo), vamos abrir um arquivo (nome do arquivo passado como str), e com ele vamos abrir como um metodo (w escrita, a reescrita, r leitura)
+nisso temos mais 2 metodos (dump, load)
+entao:
+with open("arquivo.json, "r") as json_file: (abrindo o arquivo da sua escolha no formato json, como leitura, e setando a variavel json_file como o arquivo)
+    db = json.load(json_file)
+    (salvando o arquivo em db, pra ser parte do codigo)
+
+
+#proxima:
+definindo o id global, basicamente, pego o id do ultimo item da lista, pelo seu indice (indice = posicao da lista)
+if db: (verifica se tem valor)
+    task_id = db[-1]["id"]
+else:
+    (caso nao tenha)
+    task_id = 0
+
+
+#logica da formatacao e conversao do banco de dados:
+ja esta documentado no codigo, mas basicamente serve para caso o banco de dados tenha um formato errado, ele corrige o formato automaticamente sem dar pane
+
+
+restante do codigo ja esta documentado, qualquer duvida me pergunte depois
+(no while tem a opcao "teste" para novas funcoes ainda em manutencao)
