@@ -8,7 +8,7 @@ frame1 = Frame(root, bg="black")
 frame1.place(relwidth=1, relheight=1)
 
 def show():
-	
+
 
 	description=0
 	status=0
